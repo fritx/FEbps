@@ -1,3 +1,9 @@
+<style>
+  .demo__option-img {
+    margin-left: 0.28em;
+  }
+</style>
+
 <template>
   <div id="app">
     <section class="title-section">
@@ -8,22 +14,19 @@
       <div class="demo__input-area">
         <fieldset class="demo__option-field">
           <legend>Choose a sample image:</legend>
-          <img class="demo__option-img" src="/static/img/atx.jpg" alt="atx image">
-          <img class="demo__option-img" src="/static/img/bike.jpg" alt="bike image">
-          <img class="demo__option-img" src="/static/img/cacti.jpg" alt="cacti image">
-          <img class="demo__option-img" src="/static/img/lakegeneva.jpg" alt="lakegeneva image">
-          <img class="demo__option-img" src="/static/img/tahoe.jpg" alt="tahoe image">
+          <img v-for="item in sampleData" class="demo__option-img"
+            :src="`/static/img/${item}.jpg`" :alt="`${item} image`">
           <button class="take-photo" @click="takePhoto()">Take a photo!</button>
           <br>
           <label class="demo__input-label">
             Or paste in a link to your own photo:
-            <input class="demo__input-img" type="text" v-el:aaa v-model="inputValue" @input="inputInput()" @focus="inputFocus()">
+            <input class="demo__input-img" type="text" v-el:input v-model="inputValue" @input="inputInput()" @focus="inputFocus()">
           </label>
         </fieldset>
-        <section class="video-container">
-          <video id="camera-stream" width="480px" height="360px" autoplay></video>
+        <section class="video-container" v-el:video-container>
+          <video v-el:video width="480px" height="360px" autoplay></video>
           <button id="snapshot" @click="snapshot()">Use snapshot</button>
-          <canvas style="display: none"></canvas>
+          <canvas v-el:canvas style="display: none"></canvas>
         </section>
         <small class="demo__note">Hovering over any of these images (or clicking on mobile) will remove the filter effect to visualize the changes.</small>
       </div>
@@ -152,6 +155,7 @@ export default {
   data () {
     return {
       inputValue: '',
+      sampleData: ['atx', 'bike', 'cacti', 'lakegeneva', 'tahoe'],
       listData: [
         [null, ' #nofilter'],
         ['_1977', ' 1977'],
@@ -190,7 +194,7 @@ export default {
 
   methods: {
     inputFocus () {
-      document.querySelector('input').select()
+      this.$els.input.select()
     },
     inputInput () {
         // wait for next tick
@@ -209,8 +213,8 @@ export default {
       for (var i = 0; i < imgs.length; i++) imgs[i].src = src
     },
     snapshot () {
-      var canvas = window.canvas
-      canvas.getContext('2d').drawImage(window.video, 0, 0, canvas.width,
+      var canvas = this.$els.canvas
+      canvas.getContext('2d').drawImage(this.$els.video, 0, 0, canvas.width,
         canvas.height)
       this.updateImages(canvas.toDataURL())
     },
@@ -226,7 +230,7 @@ export default {
         navigator.msGetUserMedia)
 
       // open up the section
-      document.querySelector('.video-container').style.maxHeight = '420px'
+      this.$els.videoContainer.style.maxHeight = '420px'
 
       // Check that the browser supports getUserMedia.
       // If it doesn't show an alert, otherwise continue.
@@ -241,7 +245,7 @@ export default {
           // Success Callback
           localMediaStream => {
             // Get a reference to the video element on the page.
-            var vid = document.getElementById('camera-stream')
+            var vid = this.$els.video
 
             // Create an object URL for the video stream and use this
             // to set the video source.
@@ -259,15 +263,10 @@ export default {
       }
 
       // Put variables in global scope to make them available to the browser console.
-      window.video = document.querySelector('video')
-      var canvas = window.canvas = document.querySelector('canvas')
+      var canvas = this.$els.canvas
       canvas.width = 480
       canvas.height = 360
     }
   }
 }
 </script>
-
-<style>
-
-</style>
