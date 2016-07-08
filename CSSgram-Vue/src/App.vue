@@ -1,3 +1,4 @@
+<style lang="scss" src="./scss/site/demo-site.scss"></style>
 <style>
   .demo__option-img {
     margin-left: 0.28em;
