@@ -3,14 +3,14 @@
     <div class="demo__input-area">
       <fieldset v-el:fieldset class="demo__option-field">
         <legend>Choose a sample image:</legend>
-        <img v-for="item in sampleData" class="demo__option-img"
+        <img v-for="item in samples" class="demo__option-img"
           :src="`/static/img/${item}.jpg`" :alt="`${item} image`"
-          @click="sampleClick($event.target)">
+          @click="sampleClick($event)">
         <button class="take-photo" @click="takePhoto()">Take a photo!</button>
         <br>
         <label class="demo__input-label">
           Or paste in a link to your own photo:
-          <input class="demo__input-img" type="text" v-el:input v-model="inputValue" @input="inputInput()" @focus="inputFocus()">
+          <input class="demo__input-img" type="text" v-el:input :value="inputValue" @input="inputInput()" @focus="inputFocus()">
         </label>
       </fieldset>
 
@@ -19,7 +19,7 @@
     </div>
 
     <ul class="demo__list">
-      <li class="demo__item" v-for="item in listData">
+      <li class="demo__item" v-for="item in cssgrams">
         <figure :class="[item[0]]">
           <img :src="imageSrc">
           <figcaption>{{item[1]}}</figcaption>
@@ -30,28 +30,31 @@
 </template>
 
 <script>
+import { samples, cssgrams } from '../constants'
+import { inputValue, imageSrc } from '../vuex/getters'
+import { inputChange, samplePick } from '../vuex/module'
 import VideoContainer from './VideoContainer'
 
 // broadcast: take-photo
 export default {
   components: { VideoContainer },
-  props: ['sampleData', 'listData'],
 
   data () {
-    return {
-      imageSrc: null,
-      inputValue: ''
-    }
+    return { samples, cssgrams }
   },
-
   ready () {
     const img = this.$els.fieldset.querySelector('img')
-    this.sampleClick(img)
+    this.samplePick(img)
   },
 
-  events: {
-    snapshot (src) {
-      this.updateImages(src)
+  vuex: {
+    getters: {
+      inputValue,
+      imageSrc
+    },
+    actions: {
+      inputChange,
+      samplePick
     }
   },
 
@@ -60,20 +63,14 @@ export default {
       this.$els.input.select()
     },
     inputInput () {
-        // wait for next tick
-        // get the correct input value
+      // wait for next tick
+      // get the correct input value
       this.$nextTick(() => {
-        this.updateImages(this.inputValue)
+        this.inputChange(this.$els.input.value)
       })
     },
-    sampleClick (img) {
-      const src = img.getAttribute('src')
-      this.inputValue = src
-      this.updateImages(src)
-    },
-
-    updateImages (src) {
-      this.imageSrc = src
+    sampleClick (event) {
+      this.samplePick(event.target)
     },
     takePhoto () {
       this.$broadcast('take-photo')

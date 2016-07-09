@@ -11,9 +11,8 @@
       <h2 class="title--top-sub">A tiny (&lt;1kb gzipped!) library for recreating <a href="http://instagram.com">Instagram</a> filters with CSS filters and blend modes.</h2>
     </section>
 
-    <demo-section :sample-data="sampleData"
-      :list-data="listData"></demo-section>
-    <explanation-section :list-data="listData"></explanation-section>
+    <demo-section></demo-section>
+    <explanation-section></explanation-section>
     <how-to-section></how-to-section>
 
     <footer class="attribution">
@@ -34,36 +33,6 @@ export default {
     DemoSection,
     ExplanationSection,
     HowToSection
-  },
-
-  data () {
-    return {
-      sampleData: ['atx', 'bike', 'cacti', 'lakegeneva', 'tahoe'],
-      listData: [
-        [null, ' #nofilter'],
-        ['_1977', ' 1977'],
-        ['aden', ' Aden'],
-        ['brooklyn', ' Brooklyn'],
-        ['clarendon', ' Clarendon'],
-        ['earlybird', ' Earlybird'],
-        ['gingham', ' Gingham'],
-        ['hudson', ' Hudson'],
-        ['inkwell', ' Inkwell'],
-        ['lark', ' Lark'],
-        ['lofi', ' Lo-Fi'],
-        ['mayfair', ' Mayfair'],
-        ['moon', ' Moon'],
-        ['nashville', ' Nashville'],
-        ['perpetua', ' Perpetua'],
-        ['reyes', ' Reyes'],
-        ['rise', ' Rise'],
-        ['slumber', ' Slumber'],
-        ['toaster', ' Toaster'],
-        ['walden', ' Walden'],
-        ['willow', ' Willow'],
-        ['xpro2', ' X-pro II']
-      ]
-    }
   }
 }
 </script>

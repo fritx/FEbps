@@ -23,7 +23,7 @@
     <h3>Available Classes</h3>
     <small><em>For use in HTML markup:</em></small>
     <ul class="available-classes">
-      <li v-for="item in listData">{{item[1]}}: <code>class="{{item[0]}}"</code></li>
+      <li v-for="item in cssgrams">{{item[1]}}: <code>class="{{item[0]}}"</code></li>
     </ul>
     <hr>
     <h3>2. Use Sass <code>@extends</code></h3>
@@ -83,8 +83,18 @@
     <h3>Available Mixins</h3>
     <small><em>For use in Sass elements:</em></small>
     <ul class="available-classes">
-      <li v-for="item in listData">{{item[1]}}: <code>@include {{item[0]}}();</code></li>
+      <li v-for="item in cssgrams">{{item[1]}}: <code>@include {{item[0]}}();</code></li>
     </ul>
     <hr>
   </section>
 </template>
+
+<script>
+import { cssgrams } from '../constants'
+
+export default {
+  data () {
+    return { cssgrams }
+  }
+}
+</script>

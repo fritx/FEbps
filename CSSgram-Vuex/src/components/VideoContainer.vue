@@ -7,8 +7,14 @@
 </template>
 
 <script>
-// dispatch: snapshot
+import { snapshotDone } from '../vuex/module'
+
+// receive: take-photo
 export default {
+  vuex: {
+    actions: { snapshotDone }
+  },
+
   events: {
     'take-photo' () {
       this.takePhoto()
@@ -20,7 +26,7 @@ export default {
       const canvas = this.$els.canvas
       canvas.getContext('2d').drawImage(this.$els.video, 0, 0, canvas.width,
         canvas.height)
-      this.$dispatch('snapshot', canvas.toDataURL())
+      this.snapshotDone(canvas.toDataURL())
     },
 
     takePhoto () {
