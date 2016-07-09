@@ -4,6 +4,7 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
+var LoggerPlugin = require('./webpack-logger-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var env = process.env.NODE_ENV === 'testing'
@@ -37,6 +38,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new LoggerPlugin({ append: false, filename: 'webpack.prod.spec' }),
     // extract css into its own file
     new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
     // generate dist index.html with correct asset hash for caching.
