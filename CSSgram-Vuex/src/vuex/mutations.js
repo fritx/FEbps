@@ -6,16 +6,10 @@ const SAMPLE_PICK = 'SAMPLE_PICK'
 const TAKE_PHOTO = 'TAKE_PHOTO'
 const SNAPSHOT = 'SNAPSHOT'
 
-// state
-const state = {
-  showCamera: false,
-  inputValue: '',
-  imageSrc: null
-}
 // mutations
 // note: (prevState, payload) => nextState
 // https://github.com/vuejs/vuex/issues/246
-const mutations = {
+export default {
   [INPUT_CHANGE] (state, value) {
     state.showCamera = false
     state.inputValue = value
@@ -33,7 +27,6 @@ const mutations = {
     state.imageSrc = dataurl
   }
 }
-export { state, mutations }
 
 // actions
 export function inputChange ({ dispatch }, value) {

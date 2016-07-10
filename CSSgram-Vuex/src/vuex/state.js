@@ -1,3 +1,11 @@
+// state
+export default {
+  showCamera: false,
+  inputValue: '',
+  imageSrc: null
+}
+
+// getters
 export function showCamera (state) {
   return state.showCamera
 }

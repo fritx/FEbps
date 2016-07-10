@@ -2,7 +2,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from './plugins/logger'
-import { state, mutations } from './module'
+import state from './state'
+import mutations from './mutations'
 
 const debug = process.env.NODE_ENV !== 'production'
 Vue.use(Vuex)

@@ -1,4 +1,4 @@
-<style scoped>
+<style>
   .video-container {
     max-height: 420px;
   }
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { showCamera } from '../vuex/getters'
-import { takePhoto, snapshot } from '../vuex/module'
+import { showCamera } from '../vuex/state'
+import { takePhoto, snapshot } from '../vuex/mutations'
 
 // receive: take-photo
 export default {

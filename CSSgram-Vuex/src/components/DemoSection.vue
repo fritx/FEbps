@@ -1,4 +1,4 @@
-<style scoped>
+<style>
   .demo__option-img {
     margin-left: 0.28em;
   }
@@ -37,8 +37,8 @@
 
 <script>
 import { samples, cssgrams } from '../constants'
-import { inputValue, imageSrc } from '../vuex/getters'
-import { inputChange, samplePick } from '../vuex/module'
+import { inputValue, imageSrc } from '../vuex/state'
+import { inputChange, samplePick } from '../vuex/mutations'
 import VideoContainer from './VideoContainer'
 
 // broadcast: take-photo
