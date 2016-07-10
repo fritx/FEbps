@@ -1,3 +1,9 @@
+<style scoped>
+  .demo__option-img {
+    margin-left: 0.28em;
+  }
+</style>
+
 <template>
   <section class="demo__section">
     <div class="demo__input-area">

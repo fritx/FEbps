@@ -1,10 +1,14 @@
+import { getUserMedia, videoDataURL } from '../api'
+
 // mutation-types
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const SAMPLE_PICK = 'SAMPLE_PICK'
-const SNAPSHOT_DONE = 'SNAPSHOT_DONE'
+const TAKE_PHOTO = 'TAKE_PHOTO'
+const SNAPSHOT = 'SNAPSHOT'
 
 // state
 const state = {
+  showCamera: false,
   inputValue: '',
   imageSrc: null
 }
@@ -13,14 +17,19 @@ const state = {
 // https://github.com/vuejs/vuex/issues/246
 const mutations = {
   [INPUT_CHANGE] (state, value) {
+    state.showCamera = false
     state.inputValue = value
     state.imageSrc = value
   },
   [SAMPLE_PICK] (state, src) {
+    state.showCamera = false
     state.inputValue = src
     state.imageSrc = src
   },
-  [SNAPSHOT_DONE] (state, dataurl) {
+  [TAKE_PHOTO] (state) {
+    state.showCamera = true
+  },
+  [SNAPSHOT] (state, dataurl) {
     state.imageSrc = dataurl
   }
 }
@@ -34,6 +43,11 @@ export function samplePick ({ dispatch }, img) {
   const src = img.getAttribute('src')
   dispatch(SAMPLE_PICK, src)
 }
-export function snapshotDone ({ dispatch }, dataurl) {
-  dispatch(SNAPSHOT_DONE, dataurl)
+export function takePhoto ({ dispatch }, video) {
+  dispatch(TAKE_PHOTO)
+  getUserMedia(video)
+}
+export function snapshot ({ dispatch }, video) {
+  const dataurl = videoDataURL(video)
+  dispatch(SNAPSHOT, dataurl)
 }

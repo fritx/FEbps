@@ -1,9 +1,3 @@
-<style>
-  .demo__option-img {
-    margin-left: 0.28em;
-  }
-</style>
-
 <template>
   <div id="app">
     <section class="title-section">
