@@ -1,4 +1,3 @@
-
 export function videoDataURL (video) {
   const canvas = document.createElement('canvas')
   const { width, height } = video

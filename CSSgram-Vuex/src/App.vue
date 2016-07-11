@@ -2,7 +2,11 @@
   <div id="app">
     <section class="title-section">
       <img class="title--logo" src="assets/cssgram-logo.svg" alt="CSSgram">
-      <h2 class="title--top-sub">A tiny (&lt;1kb gzipped!) library for recreating <a href="http://instagram.com">Instagram</a> filters with CSS filters and blend modes.</h2>
+      <h2 class="title--top-sub">
+        A tiny (&lt;1kb gzipped!) library for recreating
+        <a href="http://instagram.com">Instagram</a>
+        filters with CSS filters and blend modes.
+      </h2>
     </section>
 
     <demo-section></demo-section>

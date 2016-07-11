@@ -1,4 +1,7 @@
-export const samples = ['atx', 'bike', 'cacti', 'lakegeneva', 'tahoe']
+export const samples = [
+  'atx', 'bike', 'cacti', 'lakegeneva', 'tahoe'
+]
+
 export const cssgrams = [
   [null, ' #nofilter'],
   ['_1977', ' 1977'],

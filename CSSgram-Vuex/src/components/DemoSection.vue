@@ -20,7 +20,7 @@
         </label>
       </fieldset>
 
-      <video-container v-el:camera></video-container>
+      <video-container></video-container>
       <small class="demo__note">Hovering over any of these images (or clicking on mobile) will remove the filter effect to visualize the changes.</small>
     </div>
 
