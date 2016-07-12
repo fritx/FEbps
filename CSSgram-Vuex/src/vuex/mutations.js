@@ -1,4 +1,4 @@
-import { getUserMedia, videoDataURL } from '../api'
+import { takeUserMedia, videoDataURL } from '../api'
 
 // mutation-types
 const INPUT_CHANGE = 'INPUT_CHANGE'
@@ -38,7 +38,7 @@ export function samplePick ({ dispatch }, img) {
 }
 export function takePhoto ({ dispatch }, video) {
   dispatch(TAKE_PHOTO)
-  getUserMedia(video)
+  takeUserMedia(video)
 }
 export function snapshot ({ dispatch }, video) {
   const dataurl = videoDataURL(video)

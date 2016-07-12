@@ -8,7 +8,7 @@ export function videoDataURL (video) {
 }
 
 // todo: promise resolve/reject
-export function getUserMedia (video) {
+export function takeUserMedia (video) {
   // CAMERA
   /*
   Implementation of Matt West's excellent "Accessing the Device Camera with getUserMedia" article found at http://blog.teamtreehouse.com/accessing-the-device-camera-with-getusermedia

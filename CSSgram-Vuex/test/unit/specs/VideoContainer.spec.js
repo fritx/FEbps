@@ -6,27 +6,33 @@ import VideoContainer from 'src/components/VideoContainer'
 
 Vue.use(Vuex)
 
+// fixme: '[Vue warn]: Unknown custom element: <video>
+// - did you register the component correctly?
+// For recursive components, make sure to provide the "name" option.'
 describe('VideoContainer.vue', () => {
-  let vm // reference
+  let wrap, vm, video, button // reference
+
   before(() => {
-    vm = new Vue({
+    wrap = new Vue({
       store,
       template: `
         <div>
-          <video-container v-ref:camera></video-container>
+          <video-container v-ref:vm></video-container>
         </div>
       `,
       components: { VideoContainer }
     }).$mount()
   })
+  beforeEach(() => {
+    vm = wrap.$refs.vm
+    video = vm.$el.querySelector('video')
+    button = vm.$el.querySelector('button')
+  })
 
   it('should render correct contents', () => {
-    const video = vm.$el.querySelector('video')
     expect(video.getAttribute('width')).to.equal('480')
     expect(video.getAttribute('height')).to.equal('360')
     expect(video.getAttribute('autoplay')).to.equal('')
-
-    const button = vm.$el.querySelector('button')
     expect(button.id).to.equal('snapshot')
     expect(button.textContent).to.equal('Use snapshot')
   })
@@ -35,38 +41,36 @@ describe('VideoContainer.vue', () => {
   // but $nectTick causes error:
   // `undefined is not a constructor (evaluating 'vm.$nickTick(function ()`
   it('should handle event `take-photo`', () => {
-    const camera = vm.$refs.camera
-    const video = camera.$el.querySelector('video')
-    const _takePhoto = camera.takePhoto
-    camera.takePhoto = sinon.spy() // spy
-    vm.$broadcast('take-photo') // trigger
-    expect(camera.takePhoto.calledWith(video)).to.be.true
-    camera.takePhoto = _takePhoto // restore
+    const _takePhoto = vm.takePhoto
+    vm.takePhoto = sinon.spy() // spy
+    wrap.$broadcast('take-photo') // trigger
+
+    expect(vm.takePhoto).to.be.calledWith(video)
+    vm.takePhoto = _takePhoto // restore
   })
 
-  it('should handle event #snaoshot@click', () => {
-    const camera = vm.$refs.camera
-    const video = camera.$el.querySelector('video')
-    const button = camera.$el.querySelector('button')
-    const _snapshot = camera.snapshot
-    camera.snapshot = sinon.spy() // spy
+  it('should handle event #snapshot@click', () => {
+    const _snapshot = vm.snapshot
+    vm.snapshot = sinon.spy() // spy
     button.click() // trigger
-    expect(camera.snapshot.calledWith(video)).to.be.true
-    camera.snapshot = _snapshot // restore
+
+    expect(vm.snapshot).to.be.calledWith(video)
+    vm.snapshot = _snapshot // restore
   })
 
   // fixme: how to test getters (better)?
   // https://forum.vuejs.org/topic/3823/how-to-test-a-component-that-contains-vuex-getters/4
   it('should show/hide for `showCamera`', done => {
-    const camera = vm.$refs.camera
-    expect(camera.$el.style.display).to.equal('none')
-    camera.takePhoto() // trigger
+    expect(vm.$el.style.display).to.equal('none')
+    vm.takePhoto() // trigger
+
     Vue.nextTick(() => {
       // note: display === '' here, instead of 'block'
-      expect(camera.$el.style.display).to.not.equal('none')
+      expect(vm.$el.style.display).to.not.equal('none')
       inputChange(store, 'foo') // trigger
+
       Vue.nextTick(() => {
-        expect(camera.$el.style.display).to.equal('none')
+        expect(vm.$el.style.display).to.equal('none')
         done()
       })
     })

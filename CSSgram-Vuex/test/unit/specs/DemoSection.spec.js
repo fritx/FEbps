@@ -7,49 +7,71 @@ import { trigger } from '../utils'
 Vue.use(Vuex)
 
 describe('DemoSection.vue', () => {
-  let vm // reference
+  let wrap, vm, camera, button, input  // reference
+
   before(() => {
-    vm = new Vue({
+    wrap = new Vue({
       store,
       template: `
         <div>
-          <demo-section v-ref:demo></demo-section>
+          <demo-section v-ref:vm></demo-section>
         </div>
       `,
       components: { DemoSection }
     }).$mount()
   })
+  beforeEach(() => {
+    vm = wrap.$refs.vm
+    camera = vm.$el.querySelector('.video-container')
+    button = vm.$el.querySelector('button')
+    input = vm.$el.querySelector('input')
+  })
 
   it('should render correct contents', () => {
-    const demo = vm.$el.querySelector('.demo__section')
-    expect(demo.querySelector('fieldset.demo__option-field'))
-    expect(demo.querySelector('small.demo__note'))
-    expect(demo.querySelector('ul.demo__list'))
-
-    const camera = demo.querySelector('.video-container')
+    expect(vm.$el.querySelector('fieldset.demo__option-field'))
+    expect(vm.$el.querySelector('small.demo__note'))
+    expect(vm.$el.querySelector('ul.demo__list'))
+    expect(camera)
     expect(camera.style.display).to.equal('none')
   })
 
+  it('should handle event img@click', () => {
+    const img = vm.$el.querySelector('.demo__option-img')
+    const _samplePick = vm.samplePick
+    vm.samplePick = sinon.spy() // spy
+    trigger(img, 'click') // trigger
+
+    expect(vm.samplePick).to.be.calledWith(img)
+    vm.samplePick = _samplePick // restore
+  })
+
+  it('should handle event button@click', () => {
+    const _$broadcast = vm.$broadcast
+    vm.$broadcast = sinon.spy() // spy
+    trigger(button, 'click') // trigger
+
+    expect(vm.$broadcast).to.be.calledWith('take-photo')
+    vm.$broadcast = _$broadcast // restore
+  })
+
   it('should handle event input@focus', () => {
-    const demo = vm.$refs.demo
-    const input = demo.$el.querySelector('input')
     const _select = input.select
     input.select = sinon.spy() // spy
     trigger(input, 'focus') // trigger
-    expect(input.select.calledOnce).to.be.true
+
+    expect(input.select).to.be.calledOnce
     input.select = _select // restore
   })
 
   it('should handle event input@input', done => {
-    const demo = vm.$refs.demo
-    const input = demo.$el.querySelector('input')
-    const _inputChange = demo.inputChange
-    demo.inputChange = sinon.spy() // spy
+    const _inputChange = vm.inputChange
+    vm.inputChange = sinon.spy() // spy
     trigger(input, 'input') // trigger
     input.value = 'foo'
+
     Vue.nextTick(() => {
-      expect(demo.inputChange.calledWith(input.value)).to.be.true
-      demo.inputChange = _inputChange // restore
+      expect(vm.inputChange).to.be.calledWith(input.value)
+      vm.inputChange = _inputChange // restore
       done()
     })
   })

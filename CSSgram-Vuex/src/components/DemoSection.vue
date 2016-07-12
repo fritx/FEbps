@@ -4,13 +4,16 @@
   }
 </style>
 
+<!-- note: '[Vue warn]: Invalid expression.
+Generated function body:  `static/img/${scope.item}.jpg`'
+https://github.com/vuejs/vue/issues/2955 -->
 <template>
   <section class="demo__section">
     <div class="demo__input-area">
       <fieldset v-el:fieldset class="demo__option-field">
         <legend>Choose a sample image:</legend>
         <img v-for="item in samples" class="demo__option-img"
-          :src="`static/img/${item}.jpg`" :alt="`${item} image`"
+          :src="'static/img/' + item + '.jpg'" :alt="item + ' image'"
           @click="sampleClick($event)">
         <button class="take-photo" @click="takePhoto()">Take a photo!</button>
         <br>
