@@ -1,8 +1,10 @@
 // state
-export default {
-  showCamera: false,
-  inputValue: '',
-  imageSrc: null
+export function createState () {
+  return {
+    showCamera: false,
+    inputValue: '',
+    imageSrc: null
+  }
 }
 
 // getters

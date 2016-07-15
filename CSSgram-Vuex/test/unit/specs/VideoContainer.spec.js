@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import store from 'src/vuex/store'
+import { createStore } from 'src/vuex/store'
 import { inputChange } from 'src/vuex/mutations'
 import VideoContainer from 'src/components/VideoContainer'
 
@@ -14,7 +14,7 @@ describe('VideoContainer.vue', () => {
 
   before(() => {
     wrap = new Vue({
-      store,
+      store: createStore(),
       template: `
         <div>
           <video-container v-ref:vm></video-container>
@@ -67,7 +67,7 @@ describe('VideoContainer.vue', () => {
     Vue.nextTick(() => {
       // note: display === '' here, instead of 'block'
       expect(vm.$el.style.display).to.not.equal('none')
-      inputChange(store, 'foo') // trigger
+      inputChange(vm.$store, 'foo') // trigger
 
       Vue.nextTick(() => {
         expect(vm.$el.style.display).to.equal('none')

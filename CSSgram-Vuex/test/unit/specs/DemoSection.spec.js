@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import store from 'src/vuex/store'
 import DemoSection from 'src/components/DemoSection'
+import { createStore } from 'src/vuex/store'
 import { trigger } from '../utils'
 
 Vue.use(Vuex)
@@ -11,7 +11,7 @@ describe('DemoSection.vue', () => {
 
   before(() => {
     wrap = new Vue({
-      store,
+      store: createStore(),
       template: `
         <div>
           <demo-section v-ref:vm></demo-section>
