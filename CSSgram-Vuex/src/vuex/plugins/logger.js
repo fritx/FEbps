@@ -1,5 +1,6 @@
 // Credits: borrowed code from fcomb/redux-logger
 
+/* istanbul ignore next */
 export default function createLogger ({
   collapsed = true,
   transformer = state => state,
